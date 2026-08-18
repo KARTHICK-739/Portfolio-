@@ -1,0 +1,1198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Name — Full Stack Developer</title>
+    <meta
+      name="description"
+      content="Portfolio of [Your Name], full stack developer."
+    />
+
+    <!-- ===================================================================
+  PORTFOLIO TEMPLATE — how this file is organized
+  1. Fonts + CSS tokens (edit colors/fonts here, everything else follows)
+  2. Layout CSS, section by section
+  3. HTML markup, section by section
+  4. JS at the bottom: terminal typing effect + scroll reveals
+
+  Search for "EDIT ME" comments — those are the spots meant for your
+  actual content (name, projects, links, bio). Everything else is
+  structural and you likely won't need to touch it.
+=================================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ============ 1. TOKENS ============ */
+      :root {
+        /* -- palette: navy blueprint + amber terminal accent -- */
+        --bg: #0b1220;
+        --bg-raised: #101a2e;
+        --grid-line: rgba(140, 170, 220, 0.08);
+        --ink: #e7ecf6;
+        --ink-dim: #97a3bd;
+        --ink-faint: #5b6787;
+        --accent: #ffb454; /* amber cursor / prompt */
+        --accent-dim: #c98a3e;
+        --ok: #7fd98a; /* "success" green, used sparingly */
+        --line: rgba(140, 170, 220, 0.16);
+
+        /* -- type -- */
+        --font-mono:
+          "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+        --font-sans:
+          "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+        --max-w: 980px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+
+      body {
+        margin: 0;
+        background:
+          linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 100% 42px,
+          linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 /
+            42px 100%,
+          var(--bg);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: #14100a;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+
+      .wrap {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 14px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 18px;
+        height: 1px;
+        background: var(--accent-dim);
+        display: inline-block;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-mono);
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin: 0;
+      }
+
+      /* ============ NAV ============ */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(10px);
+        background: rgba(11, 18, 32, 0.78);
+        border-bottom: 1px solid var(--line);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        max-width: var(--max-w);
+        margin: 0 auto;
+      }
+      .nav-brand {
+        font-family: var(--font-mono);
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      .nav-brand .dot {
+        color: var(--accent);
+      }
+      .nav-links {
+        display: flex;
+        gap: 26px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .nav-links a {
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        color: var(--ink-dim);
+        transition: color 0.15s ease;
+      }
+      .nav-links a:hover {
+        color: var(--accent);
+      }
+      .nav-toggle {
+        display: none;
+      }
+
+      @media (max-width: 640px) {
+        .nav-links {
+          display: none;
+        }
+      }
+
+      /* ============ HERO / TERMINAL ============ */
+      .hero {
+        padding: 84px 0 60px;
+      }
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 48px;
+        align-items: center;
+      }
+      @media (max-width: 860px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 4.4vw, 3rem);
+        line-height: 1.15;
+        margin-bottom: 18px;
+      }
+      .hero h1 .accent {
+        color: var(--accent);
+      }
+      .hero p.role {
+        font-family: var(--font-mono);
+        color: var(--ink-dim);
+        font-size: 1.02rem;
+        margin: 0 0 22px;
+      }
+      .hero p.summary {
+        color: var(--ink-dim);
+        max-width: 46ch;
+        margin: 0 0 28px;
+      }
+
+      .cta-row {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding: 12px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        border: 1px solid var(--line);
+        transition:
+          border-color 0.15s ease,
+          background 0.15s ease,
+          transform 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #14100a;
+        border-color: var(--accent);
+        font-weight: 600;
+      }
+      .btn-primary:hover {
+        transform: translateY(-1px);
+      }
+      .btn-ghost {
+        color: var(--ink);
+      }
+      .btn-ghost:hover {
+        border-color: var(--accent-dim);
+        color: var(--accent);
+      }
+
+      /* terminal window mock */
+      .terminal {
+        background: var(--bg-raised);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+      }
+      .terminal-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      .terminal-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--ink-faint);
+        opacity: 0.5;
+      }
+      .terminal-title {
+        margin-left: 8px;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--ink-faint);
+      }
+      .terminal-body {
+        padding: 20px 18px;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--ink-dim);
+        min-height: 210px;
+      }
+      .terminal-body .line {
+        margin: 0 0 10px;
+        white-space: pre-wrap;
+      }
+      .terminal-body .prompt {
+        color: var(--accent);
+      }
+      .terminal-body .out {
+        color: var(--ok);
+      }
+      .cursor {
+        display: inline-block;
+        width: 8px;
+        height: 1em;
+        background: var(--accent);
+        vertical-align: text-bottom;
+        animation: blink 1s step-end infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* ============ SECTION SCAFFOLD ============ */
+      section {
+        padding: 72px 0;
+        border-top: 1px solid var(--line);
+        scroll-margin-top: 84px;
+      }
+      .section-head {
+        margin-bottom: 40px;
+      }
+      .section-head h2 {
+        font-size: 1.5rem;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease;
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* ============ ABOUT ============ */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 48px;
+      }
+      @media (max-width: 780px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .about-grid p {
+        color: var(--ink-dim);
+        margin: 0 0 16px;
+        max-width: 62ch;
+      }
+
+      .kv-list {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .kv-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+      .kv-row:last-child {
+        border-bottom: none;
+      }
+      .kv-key {
+        color: var(--ink-faint);
+      }
+      .kv-val {
+        color: var(--ink);
+        text-align: right;
+      }
+      .kv-val a {
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px dashed var(--ink-faint);
+      }
+      .kv-val a:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      /* ============ PROJECTS: git-log style ============ */
+      .project {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 24px;
+        padding: 22px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .project:last-child {
+        border-bottom: none;
+      }
+      .project-hash {
+        font-family: var(--font-mono);
+        color: var(--accent);
+        font-size: 0.82rem;
+        padding-top: 3px;
+      }
+      .project-title {
+        font-family: var(--font-mono);
+        font-size: 1.05rem;
+        margin: 0 0 8px;
+      }
+      .project-title a {
+        text-decoration: none;
+      }
+      .project-title a:hover {
+        color: var(--accent);
+      }
+      .project-desc {
+        color: var(--ink-dim);
+        margin: 0 0 14px;
+        max-width: 62ch;
+      }
+      .tag-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .tag {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--ink-dim);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 3px 8px;
+      }
+      .project-links {
+        display: flex;
+        gap: 16px;
+      }
+      .project-links a {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--ink-dim);
+        text-decoration: none;
+        border-bottom: 1px dashed var(--ink-faint);
+      }
+      .project-links a:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+      .more-projects {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+        padding: 22px 24px;
+        background: var(--bg-raised);
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+      }
+      .more-projects p {
+        margin: 0;
+        color: var(--ink-dim);
+        max-width: 46ch;
+      }
+      .more-projects .btn {
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 600px) {
+        .project {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+      }
+
+      /* ============ SKILLS ============ */
+      .stack-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+      .stack-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+        background: var(--bg-raised);
+      }
+      .stack-card h3 {
+        font-size: 0.8rem;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+        margin-bottom: 12px;
+      }
+      .stack-card ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .stack-card li {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--ink-dim);
+        padding: 5px 0;
+      }
+
+      /* ============ TIMELINE ============ */
+      .timeline {
+        position: relative;
+        padding-left: 28px;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 6px;
+        bottom: 6px;
+        width: 1px;
+        background: var(--line);
+      }
+      .tl-item {
+        position: relative;
+        padding-bottom: 32px;
+      }
+      .tl-item:last-child {
+        padding-bottom: 0;
+      }
+      .tl-item::before {
+        content: "";
+        position: absolute;
+        left: -28px;
+        top: 4px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 4px var(--bg);
+      }
+      .tl-date {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--ink-faint);
+        margin-bottom: 6px;
+      }
+      .tl-item h3 {
+        font-size: 0.98rem;
+        margin-bottom: 6px;
+      }
+      .tl-item p {
+        color: var(--ink-dim);
+        margin: 0;
+        max-width: 60ch;
+      }
+
+      /* ============ CONTACT ============ */
+      .contact-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: start;
+      }
+      @media (max-width: 780px) {
+        .contact-inner {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .contact-inner p {
+        color: var(--ink-dim);
+        max-width: 46ch;
+      }
+
+      .link-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .link-list li {
+        border-bottom: 1px solid var(--line);
+      }
+      .link-list a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 2px;
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--ink);
+      }
+      .link-list a:hover {
+        color: var(--accent);
+      }
+      .link-list .arrow {
+        color: var(--ink-faint);
+        transition: transform 0.15s ease;
+      }
+      .link-list a:hover .arrow {
+        transform: translateX(3px);
+        color: var(--accent);
+      }
+      .email-item {
+        position: relative;
+      }
+      .email-trigger {
+        all: unset;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 14px 2px;
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--ink);
+      }
+      .email-trigger:hover {
+        color: var(--accent);
+      }
+      .email-trigger:hover .arrow {
+        transform: translateX(3px);
+        color: var(--accent);
+      }
+      .email-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 0 2px 14px;
+        padding: 12px 14px;
+        background: var(--bg-raised);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+      }
+      .email-box[hidden] {
+        display: none;
+      }
+      #emailText {
+        color: var(--accent);
+        user-select: all;
+      }
+      .copy-btn {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--ink-dim);
+        background: transparent;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition:
+          color 0.15s ease,
+          border-color 0.15s ease;
+      }
+      .copy-btn:hover {
+        color: var(--accent);
+        border-color: var(--accent-dim);
+      }
+      .copy-btn.copied {
+        color: var(--ok);
+        border-color: var(--ok);
+      }
+
+      footer {
+        padding: 32px 24px;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--ink-faint);
+        border-top: 1px solid var(--line);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="nav">
+        <!-- EDIT ME: your initials / short brand -->
+        <div class="nav-brand">karthick<span class="dot">.</span>dev</div>
+        <ul class="nav-links">
+          <li><a href="#about">about</a></li>
+          <li><a href="#projects">projects</a></li>
+          <li><a href="#stack">stack</a></li>
+          <li><a href="#timeline">timeline</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ============ HERO ============ -->
+      <section class="hero" style="border-top: none">
+        <div class="wrap hero-inner">
+          <div>
+            <p class="eyebrow">full stack developer</p>
+            <!-- EDIT ME: your name -->
+            <h1>
+              Building things that <span class="accent">ship</span>, not just
+              things that run.
+            </h1>
+            <p class="role">
+              <!-- EDIT ME -->
+              React · Django REST · Node.js · MongoDB · SQL
+            </p>
+            <p class="summary">
+              <!-- EDIT ME: 2-3 sentence summary of who you are and what you're looking for -->
+              I design and deploy full stack apps end to end — frontend in
+              React, APIs in Django or Express, databases in MongoDB or SQL,
+              shipped to Vercel and Render. Currently looking for an internship
+              where I can keep building.
+            </p>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#projects">View projects</a>
+              <a class="btn btn-ghost" href="#contact">Get in touch</a>
+              <!-- EDIT ME: point this at your actual resume file (e.g. /resume.pdf) -->
+              <a class="btn btn-ghost" href="resume.pdf" download
+                >Download resume ↓</a
+              >
+            </div>
+          </div>
+
+          <div class="terminal" aria-hidden="false">
+            <div class="terminal-bar">
+              <span class="terminal-dot"></span
+              ><span class="terminal-dot"></span
+              ><span class="terminal-dot"></span>
+              <span class="terminal-title">whoami.sh</span>
+            </div>
+            <div class="terminal-body" id="terminal-output">
+              <!-- filled in by JS below; edit the "typedLines" array in the script -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ABOUT ============ -->
+      <section id="about">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <p class="eyebrow">01 — about</p>
+            <h2>A little more context</h2>
+          </div>
+          <div class="about-grid reveal">
+            <div>
+              <!-- EDIT ME: your real bio, 2-3 short paragraphs -->
+              <p>
+                I'm a full stack developer working through a structured
+                curriculum covering React, Node.js, Django, MongoDB, and SQL —
+                built and deployed many projects rather than just studying
+                theory.
+              </p>
+              <p>
+                Recent work includes a token-authenticated connection management
+                app with a Django REST backend and a React dashboard, plus
+                several smaller React apps deployed on GitHub Pages. I like
+                understanding a concept before I write the code, and I always
+                type things out rather than copy-paste — it's slower, but it
+                sticks.
+              </p>
+            </div>
+            <div class="kv-list">
+              <div class="kv-row">
+                <span class="kv-key">location</span
+                ><span class="kv-val">India</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-key">focus</span
+                ><span class="kv-val">Full Stack (MERN + Django)</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-key">status</span
+                ><span class="kv-val">Open to internships</span>
+              </div>
+              <div class="kv-row">
+                <span class="kv-key">github</span
+                ><span class="kv-val"
+                  ><a
+                    href="https://github.com/KARTHICK-739"
+                    target="_blank"
+                    rel="noopener"
+                    >@KARTHICK-739</a
+                  ></span
+                >
+              </div>
+              <div class="kv-row">
+                <span class="kv-key">linkedin</span
+                ><span class="kv-val"
+                  ><a
+                    href="https://www.linkedin.com/in/karthick-j-472aa4429/"
+                    target="_blank"
+                    rel="noopener"
+                    >karthick-j</a
+                  ></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PROJECTS ============ -->
+      <section id="projects">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <p class="eyebrow">02 — projects</p>
+            <h2>Selected work</h2>
+          </div>
+
+          <!-- EDIT ME: replace with your real projects. Copy the .project block to add more. -->
+          <div class="project reveal">
+            <div class="project-hash">#01</div>
+            <div>
+              <h3 class="project-title">
+                <a href="#" target="_blank" rel="noopener"
+                  >Electricity Board Connection Manager</a
+                >
+              </h3>
+              <p class="project-desc">
+                Full stack app for managing utility connection requests, with
+                token-based auth and a statistics dashboard built on Chart.js.
+              </p>
+              <div class="tag-row">
+                <span class="tag">React</span>
+                <span class="tag">Vite</span>
+                <span class="tag">Django REST</span>
+                <span class="tag">Chart.js</span>
+              </div>
+              <div class="project-links">
+                <a
+                  href=" https://mini-project-13.vercel.app"
+                  target="_blank"
+                  rel="noopener"
+                  >Live demo →</a
+                >
+                <a
+                  href="https://github.com/KARTHICK-739/mini-project-13"
+                  target="_blank"
+                  rel="noopener"
+                  >Source →</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="project reveal">
+            <div class="project-hash">#02</div>
+            <div>
+              <h3 class="project-title">
+                <a href="#" target="_blank" rel="noopener"
+                  >Library Management System</a
+                >
+              </h3>
+              <p class="project-desc">
+                Book catalog and lending app with nested routing and a
+                persistent layout shell.
+              </p>
+              <div class="tag-row">
+                <span class="tag">React</span>
+                <span class="tag">React Router v7</span>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://karthick-739.github.io/mini-project-12-library-system/"
+                  target="_blank"
+                  rel="noopener"
+                  >Live demo →</a
+                >
+                <a
+                  href="https://github.com/KARTHICK-739/mini-project-12-library-system"
+                  target="_blank"
+                  rel="noopener"
+                  >Source →</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="project reveal">
+            <div class="project-hash">#03</div>
+            <div>
+              <h3 class="project-title">
+                <a href="#" target="_blank" rel="noopener"
+                  >eCommerce Storefront</a
+                >
+              </h3>
+              <p class="project-desc">
+                Product catalog with cart state, client-side routing, and form
+                validation on checkout.
+              </p>
+              <div class="tag-row">
+                <span class="tag">React</span>
+                <span class="tag">React Router</span>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://major-project-1-mu.vercel.app/"
+                  target="_blank"
+                  rel="noopener"
+                  >Live demo →</a
+                >
+                <a
+                  href="https://github.com/KARTHICK-739/major-project-1"
+                  target="_blank"
+                  rel="noopener"
+                  >Source →</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="more-projects reveal">
+          <p>
+            I've built quite a few more of these — smaller apps, experiments,
+            and coursework projects live on my GitHub.
+          </p>
+          <a
+            class="btn btn-ghost"
+            href="https://github.com/KARTHICK-739?tab=repositories"
+            target="_blank"
+            rel="noopener"
+            >See all repos →</a
+          >
+        </div>
+      </section>
+
+      <!-- ============ STACK ============ -->
+      <section id="stack">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <p class="eyebrow">03 — stack</p>
+            <h2>What I build with</h2>
+          </div>
+          <div class="stack-grid reveal">
+            <div class="stack-card">
+              <h3>frontend</h3>
+              <ul>
+                <li>React (hooks, context, router)</li>
+                <li>JavaScript (ES6+)</li>
+                <li>HTML / CSS</li>
+              </ul>
+            </div>
+            <div class="stack-card">
+              <h3>backend</h3>
+              <ul>
+                <li>Node.js / Express</li>
+                <li>Django REST Framework</li>
+                <li>Python</li>
+              </ul>
+            </div>
+            <div class="stack-card">
+              <h3>data</h3>
+              <ul>
+                <li>MongoDB</li>
+                <li>SQL</li>
+              </ul>
+            </div>
+            <div class="stack-card">
+              <h3>tooling</h3>
+              <ul>
+                <li>Git / GitHub</li>
+                <li>Vercel / Render</li>
+                <li>Vite</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TIMELINE ============ -->
+      <section id="timeline">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <p class="eyebrow">04 — timeline</p>
+            <h2>How I got here</h2>
+          </div>
+          <div class="timeline reveal">
+            <!-- EDIT ME: replace with your real milestones, newest first or oldest first -->
+            <div class="tl-item">
+              <div class="tl-date">2026</div>
+              <h3>Full Stack Development curriculum</h3>
+              <p>
+                Working through a sequential React → Node.js → Django → MongoDB
+                → SQL curriculum, shipping a deployed project after each module.
+              </p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-date">2025</div>
+              <h3>Started learning web development</h3>
+              <p>
+                Began with core JavaScript and React fundamentals — components,
+                hooks, and client-side routing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section id="contact">
+        <div class="wrap contact-inner">
+          <div>
+            <p class="eyebrow">05 — contact</p>
+            <h2 style="margin-bottom: 14px">Let's talk</h2>
+            <p>
+              Open to internship and entry-level full stack roles. The fastest
+              way to reach me is email — I check GitHub notifications too.
+            </p>
+          </div>
+          <ul class="link-list">
+            <!-- EDIT ME: your real links -->
+            <li class="email-item">
+              <button
+                type="button"
+                class="email-trigger"
+                id="emailTrigger"
+                aria-expanded="false"
+                aria-controls="emailBox"
+              >
+                email<span class="arrow">→</span>
+              </button>
+              <div
+                class="email-box"
+                id="emailBox"
+                role="dialog"
+                aria-label="Email address"
+                hidden
+              >
+                <span id="emailText"
+                  ><!-- EDIT ME -->
+                  jk9165651@gmail.com</span
+                >
+                <button type="button" class="copy-btn" id="copyEmailBtn">
+                  copy
+                </button>
+              </div>
+            </li>
+            <li>
+              <a
+                href="https://github.com/KARTHICK-739"
+                target="_blank"
+                rel="noopener"
+                >github<span class="arrow">→</span></a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/karthick-j-472aa4429/"
+                target="_blank"
+                rel="noopener"
+                >linkedin<span class="arrow">→</span></a
+              >
+            </li>
+            <li>
+              <a href="resume.pdf" download
+                >resume (pdf)<span class="arrow">→</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>built with HTML, CSS &amp; a little JS — edit freely</footer>
+
+    <script>
+      // ---- terminal typing effect ----
+      // EDIT ME: change these lines to whatever you want the terminal to "type"
+      const typedLines = [
+        { prompt: "$", text: "whoami" },
+        { out: "Full stack developer, still shipping" },
+        { prompt: "$", text: "cat stack.txt" },
+        { out: "React · Django · Node.js · MongoDB · SQL" },
+        { prompt: "$", text: "./deploy.sh --target=internship" },
+        { out: "build succeeded — ready for review" },
+      ];
+
+      const outputEl = document.getElementById("terminal-output");
+      let lineIndex = 0;
+
+      function typeLine() {
+        if (lineIndex >= typedLines.length) {
+          // loop with a small pause once finished
+          setTimeout(() => {
+            outputEl.innerHTML = "";
+            lineIndex = 0;
+            typeLine();
+          }, 2400);
+          return;
+        }
+
+        const entry = typedLines[lineIndex];
+        const row = document.createElement("div");
+        row.className = "line";
+        outputEl.appendChild(row);
+
+        if (entry.out) {
+          row.innerHTML = '<span class="out">' + entry.out + "</span>";
+          lineIndex++;
+          setTimeout(typeLine, 500);
+          return;
+        }
+
+        const promptSpan = document.createElement("span");
+        promptSpan.className = "prompt";
+        promptSpan.textContent = entry.prompt + " ";
+        row.appendChild(promptSpan);
+
+        const textNode = document.createElement("span");
+        row.appendChild(textNode);
+        const cursor = document.createElement("span");
+        cursor.className = "cursor";
+        row.appendChild(cursor);
+
+        let charIndex = 0;
+        const prefersReduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        if (prefersReduced) {
+          textNode.textContent = entry.text;
+          lineIndex++;
+          setTimeout(typeLine, 250);
+          return;
+        }
+
+        (function typeChar() {
+          if (charIndex < entry.text.length) {
+            textNode.textContent += entry.text.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeChar, 32);
+          } else {
+            lineIndex++;
+            setTimeout(typeLine, 380);
+          }
+        })();
+      }
+
+      typeLine();
+
+      // ---- scroll reveal ----
+      const revealEls = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15 },
+        );
+        revealEls.forEach((el) => io.observe(el));
+      } else {
+        revealEls.forEach((el) => el.classList.add("is-visible"));
+      }
+      // ---- email reveal box ----
+      const emailTrigger = document.getElementById("emailTrigger");
+      const emailBox = document.getElementById("emailBox");
+      const copyEmailBtn = document.getElementById("copyEmailBtn");
+      const emailText = document.getElementById("emailText");
+
+      emailTrigger.addEventListener("click", () => {
+        const isOpen = !emailBox.hidden;
+        emailBox.hidden = isOpen;
+        emailTrigger.setAttribute("aria-expanded", String(!isOpen));
+      });
+
+      copyEmailBtn.addEventListener("click", async () => {
+        const email = emailText.textContent.trim();
+        try {
+          await navigator.clipboard.writeText(email);
+        } catch (err) {
+          const range = document.createRange();
+          range.selectNode(emailText);
+          window.getSelection().removeAllRanges();
+          window.getSelection().addRange(range);
+        }
+        copyEmailBtn.textContent = "copied";
+        copyEmailBtn.classList.add("copied");
+        setTimeout(() => {
+          copyEmailBtn.textContent = "copy";
+          copyEmailBtn.classList.remove("copied");
+        }, 1500);
+      });
+    </script>
+  </body>
+</html>
