@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Name — Full Stack Developer</title>
@@ -18,7 +17,7 @@
   4. JS at the bottom: terminal typing effect + scroll reveals
 
   Search for "EDIT ME" comments — those are the spots meant for your
-  actual content (name, projects, links, bio). Everything else is
+  actual content (name, projects, links, bio). Everything else isa
   structural and you likely won't need to touch it.
 =================================================================== -->
 
@@ -633,8 +632,9 @@
       .email-box {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 12px;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
         margin: 0 2px 14px;
         padding: 12px 14px;
         background: var(--bg-raised);
@@ -649,6 +649,9 @@
       #emailText {
         color: var(--accent);
         user-select: all;
+        flex: 1 1 auto;
+        min-width: 0;
+        word-break: break-all;
       }
       .copy-btn {
         font-family: var(--font-mono);
@@ -691,6 +694,7 @@
           <li><a href="#about">about</a></li>
           <li><a href="#projects">projects</a></li>
           <li><a href="#stack">stack</a></li>
+          <li><a href="#education">education</a></li>
           <li><a href="#timeline">timeline</a></li>
           <li><a href="#contact">contact</a></li>
         </ul>
@@ -702,7 +706,7 @@
       <section class="hero" style="border-top: none">
         <div class="wrap hero-inner">
           <div>
-            <p class="eyebrow">full stack developer</p>
+            <p class="eyebrow">hi i'am Karthick, a full stack developer</p>
             <!-- EDIT ME: your name -->
             <h1>
               Building things that <span class="accent">ship</span>, not just
@@ -723,7 +727,12 @@
               <a class="btn btn-primary" href="#projects">View projects</a>
               <a class="btn btn-ghost" href="#contact">Get in touch</a>
               <!-- EDIT ME: point this at your actual resume file (e.g. /resume.pdf) -->
-              <a class="btn btn-ghost" href="resume.pdf" download
+              <a
+                class="btn btn-ghost"
+                href="resume.pdf"
+                target="_blank"
+                rel="noopener"
+                download
                 >Download resume ↓</a
               >
             </div>
@@ -968,8 +977,71 @@
               <h3>tooling</h3>
               <ul>
                 <li>Git / GitHub</li>
+                <li>VS Code</li>
+                <li>Postman</li>
                 <li>Vercel / Render</li>
                 <li>Vite</li>
+              </ul>
+            </div>
+            <div class="stack-card">
+              <h3>practices</h3>
+              <ul>
+                <li>RESTful API design</li>
+                <li>Token-based auth (JWT)</li>
+                <li>Responsive / mobile-first UI</li>
+              </ul>
+            </div>
+            <div class="stack-card">
+              <h3>soft skills</h3>
+              <ul>
+                <li>Problem-solving</li>
+                <li>Debugging</li>
+                <li>Communication</li>
+                <li>Collaboration</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ EDUCATION ============ -->
+      <section id="education">
+        <div class="wrap">
+          <div class="section-head reveal">
+            <p class="eyebrow">04 — education</p>
+            <h2>Degree &amp; certifications</h2>
+          </div>
+          <div class="stack-grid reveal">
+            <div class="stack-card">
+              <h3>Degree</h3>
+              <ul>
+                <li>
+                  Bachelor of Computer application (BCA) in Computer Science
+                </li>
+                <li>Manipal University jaipur</li>
+
+                <li>2nd year </li>
+              </ul>
+            </div>
+            <div class="stack-card">
+              <h3>certifications</h3>
+              <ul>
+                <li>
+                  <a
+                    href="https://www.guvi.in/share-certificate/7Na702R44r1881754I"
+                    target="_blank"
+                    rel="noopener"
+                    >GUVI — Full Stack Development Course↗</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.freecodecamp.org/certification/karthick739/responsive-web-design"
+                    target="_blank"
+                    rel="noopener"
+                    >freeCodeCamp — Responsive Web Design ↗</a
+                  >
+                </li>
               </ul>
             </div>
           </div>
@@ -980,7 +1052,7 @@
       <section id="timeline">
         <div class="wrap">
           <div class="section-head reveal">
-            <p class="eyebrow">04 — timeline</p>
+            <p class="eyebrow">05 — timeline</p>
             <h2>How I got here</h2>
           </div>
           <div class="timeline reveal">
@@ -1009,7 +1081,7 @@
       <section id="contact">
         <div class="wrap contact-inner">
           <div>
-            <p class="eyebrow">05 — contact</p>
+            <p class="eyebrow">06 — contact</p>
             <h2 style="margin-bottom: 14px">Let's talk</h2>
             <p>
               Open to internship and entry-level full stack roles. The fastest
@@ -1039,6 +1111,12 @@
                   ><!-- EDIT ME -->
                   jk9165651@gmail.com</span
                 >
+                <a
+                  class="copy-btn"
+                  href="mailto:jk9165651@gmail.com"
+                  style="text-decoration: none"
+                  >mail</a
+                >
                 <button type="button" class="copy-btn" id="copyEmailBtn">
                   copy
                 </button>
@@ -1061,7 +1139,7 @@
               >
             </li>
             <li>
-              <a href="resume.pdf" download
+              <a href="resume.pdf" target="_blank" rel="noopener" download
                 >resume (pdf)<span class="arrow">→</span></a
               >
             </li>
